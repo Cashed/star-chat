@@ -1,0 +1,110 @@
+@font-face {
+    font-family: 'LCARS';
+    src: url('../media/tt0105m_.TTF');
+}
+
+body {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  font-family: 'LCARS';
+}
+
+header {
+  width: 100%;
+  height: 200px;
+}
+
+.header-console {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#console-header-side {
+  background-image: url('../media/console-header-side.png');
+  width: 10%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 200px;
+  min-width: 100px;
+}
+
+.console-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 85%;
+}
+
+#header-console-numbers {
+  width: 45%;
+  height: 144px;
+}
+
+#header-console-numbers li {
+  text-decoration: none;
+  font-size: 16pt;
+  text-align: left;
+  display: inline;
+  color: #FF9900;
+}
+
+#header-console-title {
+  font-size: 76pt;
+  color: #FF9900;
+  width: 40%;
+  margin-left: 5%;
+}
+
+#header-console-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#header-console-bottom-1 {
+  width: 45%;
+  height: 15px;
+  margin-right: 5px;
+  background-color: #9999FF;
+}
+
+#header-console-bottom-2 {
+  width: 5%;
+  height: 15px;
+  margin-right: 5px;
+  background-color: #FF9966;
+}
+
+#header-console-bottom-3 {
+  width: 15%;
+  height: 15px;
+  margin-right: 5px;
+  background-color: #CC6666;
+}
+
+#header-console-bottom-4 {
+  width: 20%;
+  height: 15px;
+  margin-right: 5px;
+  background-color: #CC99CC;
+}
+
+#header-console-bottom-5 {
+  width: 20%;
+  height: 15px;
+  margin-right: 5px;
+  background-color: #FF9900;
+}
