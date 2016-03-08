@@ -173,6 +173,12 @@ nav {
   word-break: break-word;
 }
 
+#messagePost a {
+  text-decoration: none;
+  color: darkblue;
+  font-weight: bold;
+}
+
 #message-box {
   width: 75%;
   height: 150px;
