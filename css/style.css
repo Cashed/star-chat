@@ -177,6 +177,11 @@ nav {
   text-decoration: none;
   color: darkblue;
   font-weight: bold;
+  margin-left: 5px;
+}
+
+#messagePost img {
+  width: 70px;
 }
 
 #message-box {
