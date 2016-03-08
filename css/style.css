@@ -189,18 +189,20 @@ nav {
   height: 150px;
 }
 
-textarea {
+#message-box textarea {
   width: 75%;
   margin: 2%;
   font-size: 16pt;
   font-family: sans-serif;
 }
 
-button {
+#message-box button {
   vertical-align: top;
   width: 10%;
   height: 40px;
   margin: 2%;
+  border-radius: 5px;
+  background-color: #CC6699;
 }
 
 /*    ----- LOGIN -----   */
