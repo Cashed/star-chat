@@ -1,15 +1,21 @@
 'use strict';
 
 $(document).ready(function() {
-
+var chatID = '';
 var messageRef = new Firebase('https://star-chat.firebaseio.com/');
+$('#chatID').keypress(function(e) {
+  if(e.keyCode === 13) {
+    chatID = $('#chatID').val();
+    $('.login').hide();
+  }
+});
 
 function chatListen() {
   var message = $('#message');
 
   message.keypress(function(e) {
     if(e.keyCode === 13) {
-      messageRef.push(message.val());
+      messageRef.push({name:chatID, text:message.val()});
       message.val('');
     }
   });
@@ -19,19 +25,20 @@ function chatListen() {
 
 function postMessages(snapshot) {
   var board = $('#board');
-  var message = snapshot.val();
+  var name = $('<p>');
+  name.css('color', 'darkblue');
+  var data = snapshot.val();
+  var message = data.text;
+  name.text(data.name);
 
   var messagePost = $('<div id="messagePost">');
 
-  messagePost.text(message);
+  messagePost.append(name);
+  messagePost.text(': ' + message);
 
   board.append(messagePost);
 
   board[0].scrollTop = board[0].scrollHeight;
-}
-
-function login() {
-  
 }
 
 
