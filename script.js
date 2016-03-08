@@ -26,9 +26,13 @@ function postMessages(snapshot) {
   messagePost.text(message);
 
   board.append(messagePost);
+
+  board[0].scrollTop = board[0].scrollHeight;
 }
 
-
+function login() {
+  
+}
 
 
 
