@@ -35,6 +35,19 @@
       }
     });
 
+    $('#positive').on('click', function() {
+      $('#positive-pics').css('display', 'flex');
+      
+    });
+
+    $('#negative').on('click', function() {
+      $('#negative-pics').css('display', 'flex');
+    });
+
+    $('#middle').on('click', function() {
+      $('#middle-pics').css('display', 'flex');
+    });
+
     function validate() {
       var tempID = $('#chatID').val();
       return /^[a-zA-Z\s]{2,10}$/.test(tempID);
@@ -75,8 +88,6 @@
 
       board[0].scrollTop = board[0].scrollHeight;
     }
-
-
 
     function fancyNums() {
       var numList = $('#header-console-numbers');
