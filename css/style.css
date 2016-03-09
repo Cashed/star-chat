@@ -72,6 +72,7 @@ header {
   width: 40%;
   margin-left: 20px;
   height: 145px;
+  text-align: right;
 }
 
 #header-console-bottom {
@@ -216,23 +217,16 @@ nav {
   padding: 10px;
 }
 
-#message-box button {
-  vertical-align: top;
-  width: 10%;
-  height: 40px;
-  margin: 2%;
-  border-radius: 5px;
-  background-color: #CC6699;
-}
 
 /*    ----- LOGIN -----   */
 
 .login {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-start;;
   align-items: center;
   position: absolute;
+  padding-top: 5%;
   top: 200px;
   left: 10%;
   z-index: 1;

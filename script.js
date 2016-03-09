@@ -23,10 +23,10 @@
           $('#login-success').fadeIn(3000);
           $('#login-success').addClass('animate');
 
-          // setInterval(function() {
-          //   $('.login').fadeOut('slow');
-          //   board[0].scrollTop = board[0].scrollHeight;
-          // }, 5000);
+          setInterval(function() {
+            $('.login').fadeOut('slow');
+            board[0].scrollTop = board[0].scrollHeight;
+          }, 5000);
         }
         else {
           $('#id-fail').css('display', 'flex');
