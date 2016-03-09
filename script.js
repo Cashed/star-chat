@@ -8,9 +8,16 @@
 
     $('#chatID').keypress(function(e) {
       if(e.keyCode === 13) {
+        //var loginPic = $('<img>');
         chatID = $('#chatID').val();
         profilePic = pics[Math.floor(Math.random() * 18)];
+        //loginPic.attr('src', profilePic);
+
         $('.login').hide();
+
+        //$('.login-success').append(loginPic);
+
+        //$('.login-success').css('display', 'flex');
       }
     });
 
@@ -30,19 +37,20 @@
     function postMessages(snapshot) {
       var board = $('#board');
       var messagePost = $('<div id="messagePost">');
-      var name = $('<a>');
+      var name = $('<a id="slide">');
       var picture = $('<img>');
       var data = snapshot.val();
       var message = data.text;
 
-      name.text(data.name);
+      name.text(data.name + ': ');
       name.attr('href', 'http://google.com');
 
       picture.attr('src', data.pic);
 
-      messagePost.text(': ' + message);
+      messagePost.text(' ' + message);
       messagePost.prepend(name);
       messagePost.prepend(picture);
+      //messagePost.animate({'width':'100%'}, 1000);
 
       board.append(messagePost);
 
