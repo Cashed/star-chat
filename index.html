@@ -12,7 +12,8 @@
       <div class='header-console'>
         <div id='console-header-side'></div>
         <div class='console-content'>
-          <ul id='header-console-numbers'></ul>
+          <img class='header-console-numbers' src='media/numbers.gif'>
+          <img id='lcars-buttons' src='media/lcars1.gif'>
           <div id='header-console-title'>STAR CHAT</div>
           <div id='header-console-bottom'>
             <div id='header-console-bottom-1'></div>
@@ -31,17 +32,19 @@
     <section class='chat-room'>
       <div id='board'></div>
       <div id='message-box'>
-        <textarea id='message'></textarea>
+        <textarea id='message' tabindex='1'></textarea>
         <button id='send'>Send</button>
       </div>
     </section>
     <section class='login'>
-      <img src='media/federation.gif-c200' width='75px'>
-      <label>Starfleet ID: </label>
-      <input type='text' id='chatID' autofocus="autofocus">
-    </section>
-    <section class='login-success'>
-      <h3>Login Successful</h3>
+      <img class='id-prompt' src='media/federation.gif-c200' height='80px'>
+      <label class='id-prompt'>Starfleet ID: </label>
+      <input class='id-prompt' type='text' id='chatID' autofocus="autofocus" required>
+      <div class='id-prompt' id='id-fail'>Only letters and spaces, character count 2 - 12</div>
+      <div id='login-success'>
+        <h3>LOGIN SUCCESS</h3>
+        <h4 id='welcome'></h4>
+      </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
     <script src='script.js'></script>

@@ -4,28 +4,48 @@
     var chatID;
     var profilePic;
     var messageRef = new Firebase('https://star-chat.firebaseio.com/');
+    var board = $('#board');
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
 
     $('#chatID').keypress(function(e) {
       if(e.keyCode === 13) {
-        //var loginPic = $('<img>');
-        chatID = $('#chatID').val();
-        profilePic = pics[Math.floor(Math.random() * 18)];
-        //loginPic.attr('src', profilePic);
+        if(validate()){
+          var loginPic = $('<img>');
 
-        $('.login').hide();
+          profilePic = pics[Math.floor(Math.random() * 18)];
+          loginPic.attr('src', profilePic);
+          $('#login-success :first-child').after(loginPic);
 
-        //$('.login-success').append(loginPic);
+          chatID = $('#chatID').val();
+          $('#welcome').text('Welcome, ' + chatID + '.');
 
-        //$('.login-success').css('display', 'flex');
+          $('.id-prompt').fadeOut('fast');
+          $('#login-success').fadeIn(3000);
+          $('#login-success').addClass('animate');
+
+          // setInterval(function() {
+          //   $('.login').fadeOut('slow');
+          //   board[0].scrollTop = board[0].scrollHeight;
+          // }, 5000);
+        }
+        else {
+          $('#id-fail').css('display', 'flex');
+          $('#chatID').val('');
+        }
       }
     });
+
+    function validate() {
+      var tempID = $('#chatID').val();
+      return /^[a-zA-Z\s]{2,10}$/.test(tempID);
+    }
 
     function chatListen() {
       var message = $('#message');
 
       message.keypress(function(e) {
         if(e.keyCode === 13) {
+          e.preventDefault();
           messageRef.push({name:chatID, text:message.val(), pic:profilePic});
           message.val('');
         }
@@ -35,7 +55,6 @@
     }
 
     function postMessages(snapshot) {
-      var board = $('#board');
       var messagePost = $('<div id="messagePost">');
       var name = $('<a id="slide">');
       var picture = $('<img>');

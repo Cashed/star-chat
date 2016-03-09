@@ -43,13 +43,19 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: baseline;
   width: 85%;
 }
 
 #header-console-numbers {
-  width: 45%;
-  height: 144px;
+  width: 35%;
+  margin-top: 5%;
+}
+
+#lcars-buttons {
+  width: 15%;
+  margin-top: 55px;
+  margin-left: 10%;
 }
 
 #header-console-numbers li {
@@ -64,7 +70,7 @@ header {
   font-size: 76pt;
   color: #FF9900;
   width: 40%;
-  margin-left: 5%;
+  margin-left: 20px;
   height: 145px;
 }
 
@@ -153,7 +159,7 @@ nav {
 
 #board {
   width: 75%;
-  background-image: url('../media/federation2.gif');
+  background-image: url('../media/background.jpg');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -205,6 +211,9 @@ nav {
   margin: 2%;
   font-size: 16pt;
   font-family: sans-serif;
+  border-radius: 10px;
+  outline: none;
+  padding: 10px;
 }
 
 #message-box button {
@@ -220,8 +229,8 @@ nav {
 
 .login {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   position: absolute;
   top: 200px;
@@ -238,8 +247,8 @@ nav {
   background-color: black;
   outline: none;
   border: none;
-  border-bottom: 1px solid #FF9900;
   margin-left: 15px;
+  text-align: center;
 }
 
 .login img {
@@ -247,18 +256,33 @@ nav {
 }
 
 
-.login-success {
+#login-success {
   display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 200px;
-  left: 10%;
-  z-index: 1;
-  width: 80%;
-  background: black;
-  font-size: 42pt;
+  width: 100%;
+  font-size: 36pt;
   color: #FF9900;
   height: 800px;
+  margin: 0 auto;
+  top: 50px;
+  position: absolute;
+  text-align: center;
+  letter-spacing: 2px;
+  -webkit-transition: -webkit-transform 500ms ease-in-out;
+}
+
+#login-success.animate {
+  -webkit-transform:translate(0px, -50px);
+}
+
+#login-success img {
+  border-radius: 10px;
+}
+
+#id-fail {
+  display: none;
+  width: 250px;
+  height: 50px;
+  color: #FF9900;
+  font-size: 22pt;
+  text-align: center;
 }
