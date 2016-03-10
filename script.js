@@ -37,19 +37,18 @@
       }
     });
 
-    $('#positive').on('click', function() {
-      $('#positive-pics').css('display', 'flex');
+    $('.emo').on('click', function() {
+      $('#'+ $(this).attr('id') + '-pics').animate({height: '500px'}, 500);
+
       $(this).css('color', '#FF9900');
     });
 
-    $('#negative').on('click', function() {
-      $('#negative-pics').css('display', 'flex');
-      $(this).css('color', '#FF9900');
-    });
+    $('.emote-menu').mouseleave(function() {
+      $(this).animate({height: '-500px'}, 500);
 
-    $('#middle').on('click', function() {
-      $('#middle-pics').css('display', 'flex');
-      $(this).css('color', '#FF9900');
+      $('#positive').css('color', 'white');
+      $('#negative').css('color', 'white');
+      $('#middle').css('color', 'white');
     });
 
     $('.emote-menu img').on('click', function() {
@@ -91,7 +90,10 @@
       var messPicInfo = data.messPic;
 
       if(messPicInfo != undefined) {
+        var user = messageRef.key();
         var postPic = $('<img id="posted">');
+
+        messagePic = undefined;
 
         postPic.attr('src', data.messPic);
 
