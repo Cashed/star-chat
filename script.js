@@ -6,22 +6,11 @@
     var messagePic;
     var currentStatus;
     var roomRef = new Firebase('https://star-chat.firebaseio.com/');
-    var connectedRef = new Firebase('https://star-chat.firebaseio.com//.info/connected');
     var userRef = new Firebase('https://star-chat.firebaseio.com/users');
     var user = userRef.child('temp');
     var messageRef = new Firebase('https://star-chat.firebaseio.com/messages');
     var board = $('#board');
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
-
-    connectedRef.on('value', function(isOnline) {
-      if (isOnline.val()) {
-        roomRef.onDisconnect().remove();
-        setUserStatus('helper');
-      }
-      else {
-          setUserStatus(currentStatus);
-      }
-    });
 
     function setUserStatus(status) {
       currentStatus = status;
@@ -39,7 +28,8 @@
           chatID = $('#chatID').val();
           $('#welcome').text('Welcome, ' + chatID + '.');
 
-          userRef.child(chatID).set({name:chatID});
+          user = userRef.child(chatID);
+          user.set({name:chatID});
 
           $('.id-prompt').fadeOut('fast');
           $('#login-success').fadeIn(3000);
@@ -72,6 +62,10 @@
       listUser.append('<i class="fa-li fa fa-heart">');
       $('.chat-users').append(listUser);
     });
+
+    window.onbeforeunload = function() {
+      user.remove();
+    };
 
     userRef.on('child_removed', function(snapshot) {
       var user = snapshot.val();
