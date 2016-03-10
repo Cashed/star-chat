@@ -13,14 +13,13 @@ body {
   width: 100%;
   position: relative;
   font-family: 'LCARS';
-  overflow: hidden;
 }
 
 /*    ----- HEADER -----    */
 
 header {
   width: 100%;
-  height: 200px;
+  height: 150px;
   margin-bottom: 20px;
 }
 
@@ -29,39 +28,68 @@ header {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: flex-end;
   width: 100%;
 }
 
 #console-header-side {
-  background-image: url('../media/console-header-side.png');
   width: 10%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 200px;
+  height: 150px;
+  color: black;
+  font-size: 14pt;
+}
+
+#console-header-side #top-side {
+  width: 100%;
+  background-color: #CC99CC;
+  margin-bottom: 5px;
+  height: 60px;
+  position: relative;
+}
+
+#console-header-side #top-side span {
+  position: absolute;
+  bottom: 0;
+  right: 28%;
+}
+
+#console-header-side #bottom-side {
+  width: 100%;
+  background-color: #9999FF;
+  height: 85px;
+  border-radius: 0 0 0 55px;
+  text-align: center;
 }
 
 .console-content {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: baseline;
   width: 85%;
 }
 
-#lcars-buttons {
-  width: 15%;
-  margin-top: 55px;
-  margin-left: 10%;
+.console-content img {
+  z-index: 2;
 }
 
-#header-console-numbers li {
-  text-decoration: none;
-  font-size: 16pt;
-  text-align: left;
-  display: inline;
-  color: #FF9900;
+#beveled {
+  background-color: black;
+  z-index: 1;
+  height: 135px;
+  display: block;
+  float: left;
+  width: 50px;
+  position: absolute;
+  top: 0;
+  left: 8%;
+  border-radius: 0 0 0 30px;
+}
+
+#lcars-buttons {
+  width: 15%;
+  margin-left: 10%;
 }
 
 #header-console-title {
@@ -69,7 +97,6 @@ header {
   color: #FF9900;
   width: 40%;
   margin-left: 20px;
-  height: 145px;
   text-align: right;
 }
 
@@ -114,6 +141,7 @@ header {
   height: 15px;
   margin-right: 5px;
   background-color: #FF9900;
+  border-radius: 0 5px 5px 0;
 }
 
 
@@ -132,7 +160,7 @@ nav {
   background-color: #CC6699;
   margin-bottom: 5px;
   height: 200px;
-  border-top-left-radius: 50px;
+  border-radius: 50px 50px 0 0;
   text-align: center;
   font-size: 30pt;
   padding-top: 60px;
@@ -144,6 +172,7 @@ nav {
   height: 350px;
   font-size: 20pt;
   text-align: center;
+  border-radius: 0 0 50px 50px;
 }
 
 /*    ----- CHAT ROOM -----   */
@@ -207,7 +236,7 @@ nav {
 
 #message-box {
   width: 75%;
-  height: 150px;
+  height: 140px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -217,14 +246,13 @@ nav {
 
 #message-box #message {
   width: 75%;
-  margin: 2%;
   font-size: 16pt;
   font-family: sans-serif;
   border-radius: 10px;
   outline: none;
   padding: 10px;
   background-color: white;
-  height: 75px;
+  height: 70px;
   overflow: scroll;
 }
 
@@ -238,7 +266,7 @@ nav {
 }
 
 .emoticons .fa {
-  margin: 25px;
+  margin: 0 25px;
   width: 20px;
 }
 
@@ -274,14 +302,14 @@ nav {
   align-items: center;
   position: absolute;
   padding-top: 5%;
-  top: 220px;
+  top: 150px;
   left: 10%;
   z-index: 1;
   width: 80%;
   background: black;
   font-size: 42pt;
   color: #FF9900;
-  height: 600px;
+  height: 565px;
 }
 
 .login input {
@@ -302,9 +330,9 @@ nav {
   width: 100%;
   font-size: 36pt;
   color: #FF9900;
-  height: 800px;
+  height: 565px;
   margin: 0 auto;
-  top: 50px;
+  top: 150px;
   position: absolute;
   text-align: center;
   letter-spacing: 2px;
