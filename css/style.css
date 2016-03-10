@@ -187,9 +187,8 @@ nav {
 
 #board {
   width: 75%;
-  background-image: url('../media/background.jpg');
+  background-image: url('../media/logo.png');
   background-position: center;
-  background-size: contain;
   background-repeat: no-repeat;
   height: 500px;
   overflow: scroll;
