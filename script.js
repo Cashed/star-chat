@@ -3,6 +3,7 @@
   $(document).ready(function() {
     var chatID;
     var profilePic;
+    var messagePic;
     var messageRef = new Firebase('https://star-chat.firebaseio.com/');
     var board = $('#board');
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
@@ -25,8 +26,9 @@
 
           setInterval(function() {
             $('.login').fadeOut('slow');
-            board[0].scrollTop = board[0].scrollHeight;
           }, 5000);
+
+          board[0].scrollTop = board[0].scrollHeight;
         }
         else {
           $('#id-fail').css('display', 'flex');
@@ -37,15 +39,21 @@
 
     $('#positive').on('click', function() {
       $('#positive-pics').css('display', 'flex');
-      
+      $(this).css('color', '#FF9900');
     });
 
     $('#negative').on('click', function() {
       $('#negative-pics').css('display', 'flex');
+      $(this).css('color', '#FF9900');
     });
 
     $('#middle').on('click', function() {
       $('#middle-pics').css('display', 'flex');
+      $(this).css('color', '#FF9900');
+    });
+
+    $('.emote-menu img').on('click', function() {
+      messagePic = $(this).attr('src');
     });
 
     function validate() {
@@ -59,8 +67,15 @@
       message.keypress(function(e) {
         if(e.keyCode === 13) {
           e.preventDefault();
-          messageRef.push({name:chatID, text:message.val(), pic:profilePic});
-          message.val('');
+
+          if(messagePic == undefined) {
+            messageRef.push({name:chatID, text:message.text(), pic:profilePic});
+          }
+          else {
+            messageRef.push({name:chatID, text:message.text(), pic:profilePic, messPic:messagePic});
+          }
+
+          message.text('');
         }
       });
 
@@ -69,22 +84,41 @@
 
     function postMessages(snapshot) {
       var messagePost = $('<div id="messagePost">');
-      var name = $('<a id="slide">');
+      var name = $('<a>');
       var picture = $('<img>');
       var data = snapshot.val();
       var message = data.text;
+      var messPicInfo = data.messPic;
 
-      name.text(data.name + ': ');
-      name.attr('href', 'http://google.com');
+      if(messPicInfo != undefined) {
+        var postPic = $('<img id="posted">');
 
-      picture.attr('src', data.pic);
+        postPic.attr('src', data.messPic);
 
-      messagePost.text(' ' + message);
-      messagePost.prepend(name);
-      messagePost.prepend(picture);
-      //messagePost.animate({'width':'100%'}, 1000);
+        name.text(data.name + ': ');
+        name.attr('href', 'http://google.com');
 
-      board.append(messagePost);
+        picture.attr('src', data.pic);
+
+        messagePost.text(' ' + message);
+        messagePost.prepend(postPic);
+        messagePost.prepend(name);
+        messagePost.prepend(picture);
+
+        board.append(messagePost);
+      }
+      else {
+        name.text(data.name + ': ');
+        name.attr('href', 'http://google.com');
+
+        picture.attr('src', data.pic);
+
+        messagePost.text(' ' + message);
+        messagePost.prepend(name);
+        messagePost.prepend(picture);
+
+        board.append(messagePost);
+      }
 
       board[0].scrollTop = board[0].scrollHeight;
     }

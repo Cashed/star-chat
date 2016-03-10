@@ -197,6 +197,11 @@ nav {
 #messagePost img {
   border-radius: 10px;
   box-shadow: 5px 5px 5px #888888;
+  margin-right: 20px;
+}
+
+#messagePost #posted {
+  margin-left: 10px;
 }
 
 #message-box {
@@ -209,7 +214,7 @@ nav {
   align-items: center;
 }
 
-#message-box textarea {
+#message-box #message {
   width: 75%;
   margin: 2%;
   font-size: 16pt;
@@ -217,6 +222,8 @@ nav {
   border-radius: 10px;
   outline: none;
   padding: 10px;
+  background-color: white;
+  height: 75px;
 }
 
 .emoticons {
@@ -236,26 +243,32 @@ nav {
 
 
 .emote-menu {
-  display: none;
   position: absolute;
   bottom: 150px;
   left: 70%;
   height: 500px;
   overflow: scroll;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 }
 
 .emote-menu img {
-  border: 3px solid gray;
+  border: 3px solid black;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px #888888;
 }
 
 .emote-menu img:hover {
   border: 3px solid #FF9900;
+}
+
+#close-menu {
+  color: #FF9900;
+  position: absolute;
+  top: 300px;
+  left: 80%;
+  font-size: 16pt;
 }
 
 /*    ----- LOGIN -----   */
