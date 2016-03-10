@@ -52,7 +52,12 @@
     });
 
     $('.emote-menu img').on('click', function() {
+      var postPic = $(this);
+
       messagePic = $(this).attr('src');
+      $('#message').append(postPic);
+      $('#message')[0].scrollTop = $('#message')[0].scrollHeight;
+
     });
 
     function validate() {
@@ -62,10 +67,16 @@
 
     function chatListen() {
       var message = $('#message');
+      var isMessage = false;
+
+      message.on('input', function() {
+        isMessage = true;
+      });
 
       message.keypress(function(e) {
-        if(e.keyCode === 13) {
+        if(e.keyCode === 13 && isMessage) {
           e.preventDefault();
+          isMessage = false;
 
           if(messagePic == undefined) {
             messageRef.push({name:chatID, text:message.text(), pic:profilePic});
