@@ -73,6 +73,12 @@
       $('.chat-users').append(listUser);
     });
 
+    userRef.on('child_removed', function(snapshot) {
+      var user = snapshot.val();
+
+      $('#' + user.name).remove();
+    });
+
     function chatListen() {
       var message = $('#message');
       var isMessage = false;
