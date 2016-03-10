@@ -52,12 +52,12 @@
     });
 
     $('.emote-menu img').on('click', function() {
-      var postPic = $(this);
+      var postPic = $('<img>').attr('src', $(this).attr('src'));
 
       messagePic = $(this).attr('src');
+
       $('#message').append(postPic);
       $('#message')[0].scrollTop = $('#message')[0].scrollHeight;
-
     });
 
     function validate() {
@@ -89,7 +89,7 @@
         }
       });
 
-      messageRef.on('child_added', postMessages);
+      messageRef.limitToLast(10).on('child_added', postMessages);
     }
 
     function postMessages(snapshot) {
@@ -136,18 +136,6 @@
       board[0].scrollTop = board[0].scrollHeight;
     }
 
-    function fancyNums() {
-      var numList = $('#header-console-numbers');
-
-      for(var i = 0; i < 50; i++) {
-        var randomNum = Math.floor(Math.random() * 9999) + ' ';
-        var nums = $('<li>');
-        nums.text(randomNum);
-        numList.append(nums);
-      }
-
-    }
     chatListen();
-    fancyNums();
   });
 })();
