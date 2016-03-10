@@ -10,9 +10,7 @@
     var userRef = new Firebase('https://star-chat.firebaseio.com/users');
     var user = userRef.child('temp');
     var messageRef = new Firebase('https://star-chat.firebaseio.com/messages');
-    var currentMessages = messageRef.limitToLast(10);
     var board = $('#board');
-    var guiUserStatus = $('<i class="fa-li fa fa-heart">');
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
 
     connectedRef.on('value', function(isOnline) {
@@ -33,7 +31,6 @@
       if (e.keyCode === 13) {
         if (validate()){
           var loginPic = $('<img>');
-          var listUser = $('<li>');
 
           profilePic = pics[Math.floor(Math.random() * 18)];
           loginPic.attr('src', profilePic);
@@ -42,17 +39,11 @@
           chatID = $('#chatID').val();
           $('#welcome').text('Welcome, ' + chatID + '.');
 
-          user = userRef.child(chatID);
-          user.push({name:chatID});
+          userRef.child(chatID).set({name:chatID});
 
           $('.id-prompt').fadeOut('fast');
           $('#login-success').fadeIn(3000);
           $('#login-success').addClass('animate');
-
-          listUser.attr('id', chatID);
-          listUser.text(chatID);
-          listUser.append(guiUserStatus);
-          $('.chat-users').append(listUser);
 
           setInterval(function() {
             $('.login').fadeOut('slow');
@@ -71,6 +62,16 @@
       var tempID = $('#chatID').val();
       return /^[a-zA-Z\s]{2,10}$/.test(tempID);
     }
+
+    userRef.on('child_added', function(snapshot) {
+      var listUser = $('<li>');
+      var user = snapshot.val();
+
+      listUser.attr('id', user.name);
+      listUser.text(user.name);
+      listUser.append('<i class="fa-li fa fa-heart">');
+      $('.chat-users').append(listUser);
+    });
 
     function chatListen() {
       var message = $('#message');
@@ -96,7 +97,7 @@
         }
       });
 
-      currentMessages.on('child_added', postMessages);
+      messageRef.on('child_added', postMessages);
     }
 
     function postMessages(snapshot) {
