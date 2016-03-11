@@ -362,3 +362,59 @@ nav {
   font-size: 22pt;
   text-align: center;
 }
+
+/*    ----- PROFILE -----   */
+
+.profile {
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;;
+  align-items: center;
+  z-index: 1;
+  background-color: black;
+  width: 400px;
+  font-size: 14pt;
+  font-weight: lighter;
+  border-radius: 15px;
+  border: 3px solid #CC99CC;
+}
+
+.profile span {
+  margin-right: 5px;
+}
+
+.profile #separator {
+  width: 100%;
+}
+
+#profile-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#profile-top #bio-pic {
+  margin: 0 50%;
+  border-radius: 10px;
+}
+
+#profile-top-name, #profile-bottom{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  color: #FF9900;
+}
+
+#profile-top-name h1 {
+  margin-bottom: 0;
+}
+
+#profile-bottom span {
+  margin-bottom: 0;
+  margin-left: 75px;
+}
