@@ -159,6 +159,10 @@ nav {
 #console-nav-login {
   width: 100%;
   background-color: #CC6699;
+  background-image: url('../media/Decal.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
   margin-bottom: 5px;
   height: 150px;
   border-radius: 50px 50px 0 0;
