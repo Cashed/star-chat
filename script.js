@@ -12,10 +12,6 @@
     var board = $('#board');
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
 
-    function setUserStatus(status) {
-      currentStatus = status;
-    }
-
     $('#chatID').keypress(function(e) {
       if (e.keyCode === 13) {
         if (validate()){
@@ -50,7 +46,20 @@
 
     function validate() {
       var tempID = $('#chatID').val();
-      return /^[a-zA-Z\s]{2,10}$/.test(tempID);
+      var hasValidChars = /^[a-zA-Z\s]{2,10}$/.test(tempID);
+      var isUnique = true;
+
+      userRef.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var usedName = childSnapshot.key();
+
+          if (tempID === usedName) {
+            isUnique = false;
+          }
+        });
+      });
+
+      return hasValidChars && isUnique;
     }
 
     userRef.on('child_added', function(snapshot) {
@@ -59,7 +68,7 @@
 
       listUser.attr('id', user.name);
       listUser.text(user.name);
-      listUser.append('<i class="fa-li fa fa-heart">');
+      listUser.append('<i class="fa-li fa fa-crosshairs">');
       $('.chat-users').append(listUser);
     });
 

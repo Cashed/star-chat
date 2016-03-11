@@ -12,6 +12,7 @@ body {
   align-items: flex-start;
   width: 100%;
   position: relative;
+  overflow: hidden;
   font-family: 'LCARS';
 }
 
@@ -159,7 +160,7 @@ nav {
   width: 100%;
   background-color: #CC6699;
   margin-bottom: 5px;
-  height: 200px;
+  height: 150px;
   border-radius: 50px 50px 0 0;
   text-align: center;
   font-size: 30pt;
@@ -169,7 +170,7 @@ nav {
 #member-area {
   width: 100%;
   background-color: #FFCC99;
-  height: 350px;
+  height: 400px;
   font-size: 20pt;
   text-align: center;
   border-radius: 0 0 50px 50px;
