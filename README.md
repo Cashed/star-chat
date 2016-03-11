@@ -7,7 +7,7 @@ Users choose unique names upon login and are assigned a random profile picture o
 
 Online member names are populated on the console to the left.  Profile pages for users may be accessed by clicking on these user names.
 
-[Join the final frontier!](https://www.google.com)
+[Join the final frontier!](star-chat.surge.sh)
 
 ![alt text](http://rs998.pbsrc.com/albums/af104/fluffy_67_1999/ani-star-trek.gif~c200)
 
