@@ -125,7 +125,7 @@
 
           postPic.attr('src', data.messPic);
 
-          name.text(data.name + ': ');
+          name.text(data.name + ':');
 
           picture.attr('src', data.pic);
 
@@ -173,32 +173,33 @@
       $('#message')[0].scrollTop = $('#message')[0].scrollHeight;
     });
 
-    $('.chat-users').on('click', function() {
-      var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
-      console.log('in function');
-      userRef.once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var user = childSnapshot.key();
-          console.log(user);
-          console.log(clickedUser);
-          if (clickedUser === user) {
-            var userData = childSnapshot.val();
-            var rank = $('#profile-top-name p').text();
+    $('body').on('click', '.profile-link', function() {
+      if ($('.profile').css('display') != 'flex') {
+        var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
 
-            $('#bio-pic').attr('src', userData.profile);
-            $('#profile-top-name h1').text(userData.name);
-            $('#profile-top-name p').text(rank + userData.rank);
+        userRef.once('value', function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+            var user = childSnapshot.key();
 
-            $('.profile').css('display', 'flex');
+            if (clickedUser === user) {
+              var userData = childSnapshot.val();
+              var rank = $('#profile-top-name p').text();
 
-            return true;
-          }
+              $('#bio-pic').attr('src', userData.profile);
+              $('#profile-top-name h1').text(userData.name);
+              $('#profile-top-name p').text(rank + userData.rank);
+
+              $('.profile').css('display', 'flex');
+
+              return true;
+            }
+          });
         });
-      });
+      }
     });
 
-    $('.profile').mouseleave(function() {
-      $('.profile').css('display', 'none');
+    $('.profile').on('click', function() {
+      $(this).css('display', 'none');
 
       $('#bio-pic').attr('src', '');
       $('#profile-top-name h1').text('');
