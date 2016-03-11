@@ -119,7 +119,7 @@
 
           picture.attr('src', data.pic);
 
-          messagePost.text(' ' + message);
+          messagePost.text(message);
           messagePost.prepend(postPic);
           messagePost.prepend(name);
           messagePost.prepend(picture);
