@@ -9,7 +9,7 @@ Online member names are populated on the console to the left.  Profile pages for
 
 [Join the final frontier!](http://star-chat.surge.sh)
 
-![alt text](http://digilander.libero.it/locutus_of_borg_1974/Enterprise%20A%203%20D..gif)
+![alt text](http://www.animatedimages.org/data/media/635/animated-star-trek-image-0011.gif)
 
 The Tech
 ---------
