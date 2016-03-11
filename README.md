@@ -7,9 +7,9 @@ Users choose unique names upon login and are assigned a random profile picture o
 
 Online member names are populated on the console to the left.  Profile pages for users may be accessed by clicking on these user names.
 
-[Join the final frontier!](star-chat.surge.sh)
+[Join the final frontier!](http://star-chat.surge.sh)
 
-![alt text](http://rs998.pbsrc.com/albums/af104/fluffy_67_1999/ani-star-trek.gif~c200)
+![alt text](http://digilander.libero.it/locutus_of_borg_1974/Enterprise%20A%203%20D..gif)
 
 The Tech
 ---------
