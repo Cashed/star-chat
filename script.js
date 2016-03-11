@@ -25,7 +25,7 @@
           $('#welcome').text('Welcome, ' + chatID + '.');
 
           user = userRef.child(chatID);
-          user.set({name:chatID});
+          user.set({name:chatID, rank:'Ensign', profile:profilePic});
 
           $('.id-prompt').fadeOut('fast');
           $('#login-success').fadeIn(3000);
@@ -63,12 +63,13 @@
     }
 
     userRef.on('child_added', function(snapshot) {
-      var listUser = $('<li>');
+      var listUser = $('<li class="profile-link">');
       var user = snapshot.val();
 
       listUser.attr('id', user.name);
       listUser.text(user.name);
       listUser.append('<i class="fa-li fa fa-crosshairs">');
+
       $('.chat-users').append(listUser);
     });
 
@@ -111,7 +112,7 @@
 
     function postMessages(snapshot) {
         var messagePost = $('<div class="messagePost" id=' + chatID + '>');
-        var name = $('<a>');
+        var name = $('<a class="profile-link">');
         var picture = $('<img>');
         var data = snapshot.val();
         var message = data.text;
@@ -137,7 +138,6 @@
         }
         else {
           name.text(data.name + ': ');
-          name.attr('href', 'http://google.com');
 
           picture.attr('src', data.pic);
 
@@ -171,6 +171,38 @@
 
       $('#message').append(postPic);
       $('#message')[0].scrollTop = $('#message')[0].scrollHeight;
+    });
+
+    $('.chat-users').on('click', function() {
+      var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
+      console.log('in function');
+      userRef.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var user = childSnapshot.key();
+          console.log(user);
+          console.log(clickedUser);
+          if (clickedUser === user) {
+            var userData = childSnapshot.val();
+            var rank = $('#profile-top-name p').text();
+
+            $('#bio-pic').attr('src', userData.profile);
+            $('#profile-top-name h1').text(userData.name);
+            $('#profile-top-name p').text(rank + userData.rank);
+
+            $('.profile').css('display', 'flex');
+
+            return true;
+          }
+        });
+      });
+    });
+
+    $('.profile').mouseleave(function() {
+      $('.profile').css('display', 'none');
+
+      $('#bio-pic').attr('src', '');
+      $('#profile-top-name h1').text('');
+      $('#profile-top-name p').text('Rank: ');
     });
 
     chatListen();

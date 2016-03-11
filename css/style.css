@@ -182,6 +182,12 @@ nav {
   word-wrap: break-word;
 }
 
+.chat-users li {
+  text-decoration: none;
+  color: darkblue;
+  cursor: pointer;
+  cursor: hand;
+}
 
 /*    ----- CHAT ROOM -----   */
 
@@ -228,6 +234,8 @@ nav {
   color: darkblue;
   font-weight: bold;
   padding: 0 15px;
+  cursor: pointer;
+  cursor: hand;
 }
 
 .messagePost img {
@@ -366,14 +374,14 @@ nav {
 /*    ----- PROFILE -----   */
 
 .profile {
-  display: flex;
+  display: none;
   position: absolute;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;;
   align-items: center;
-  z-index: 1;
   background-color: black;
+  z-index: 1;
   width: 400px;
   font-size: 14pt;
   font-weight: lighter;
@@ -381,7 +389,7 @@ nav {
   border: 3px solid #CC99CC;
 }
 
-.profile span {
+.profile p {
   margin-right: 5px;
 }
 
@@ -414,7 +422,7 @@ nav {
   margin-bottom: 0;
 }
 
-#profile-bottom span {
+#profile-bottom p {
   margin-bottom: 0;
   margin-left: 75px;
 }
