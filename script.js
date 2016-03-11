@@ -107,7 +107,7 @@
         }
       });
 
-      messageRef.on('child_added', postMessages);
+      messageRef.limitToLast(10).on('child_added', postMessages);
     }
 
     function postMessages(snapshot) {
