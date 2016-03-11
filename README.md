@@ -9,20 +9,22 @@ Online member names are populated on the console to the left.  Profile pages for
 
 [Join the final frontier!](https://www.google.com)
 
+![alt text](http://rs998.pbsrc.com/albums/af104/fluffy_67_1999/ani-star-trek.gif~c200)
+
 The Tech
 ---------
 
-+**JQuery and Javascript** for handling basic interactivity
-+**Firebase** for behind the scenes action - handling message and user data sending and retrieving.
++ **JQuery and Javascript** for handling basic interactivity
++ **Firebase** for behind the scenes action - handling message and user data sending and retrieving.
 
 The Future
 ----------
 
 Of course, due to the inspiring nature of the Star Trek series, Star Chat is in the works of implementing even more features such as:
 
-+Customizable profile pages
-+User accounts
-+Private whispers
-+...and PvP GAMING!
++ Customizable profile pages
++ User accounts
++ Private whispers
++ ...and PvP GAMING!
 
 Please, stay tuned!
