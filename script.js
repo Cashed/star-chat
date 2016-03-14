@@ -3,13 +3,13 @@
   $(document).ready(function() {
     var chatID;
     var profilePic;
-    var messagePic;
     var currentStatus;
-    var roomRef = new Firebase('https://star-chat.firebaseio.com/');
-    var userRef = new Firebase('https://star-chat.firebaseio.com/users');
-    var user = userRef.child('temp');
-    var messageRef = new Firebase('https://star-chat.firebaseio.com/messages');
+    var messagePic = '';
     var board = $('#board');
+    var roomRef = new Firebase('https://star-chat.firebaseio.com/');
+    var messageRef = roomRef.child('messages');
+    var userRef = roomRef.child('users');
+    var user = userRef.child('temp');
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
 
     $('#chatID').keypress(function(e) {
@@ -18,15 +18,7 @@
 
           createUser();
 
-          $('#welcome').text('Welcome, ' + chatID + '.');
-
-          $('.id-prompt').fadeOut('fast');
-          $('#login-success').fadeIn(3000);
-          $('#login-success').addClass('animate');
-
-          setTimeout(function() {
-            $('.login').fadeOut('slow');
-          }, 5000);
+          welcomeScreen();
 
           board[0].scrollTop = board[0].scrollHeight;
         }
@@ -42,13 +34,14 @@
       var hasValidChars = /^[a-zA-Z\s]{2,10}$/.test(tempID);
       var isUnique = true;
 
-      userRef.once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var usedName = childSnapshot.key();
+      userRef.once('value', function(allUsers) {
+        allUsers.forEach(function(specificUser) {
+          var usedName = specificUser.key();
 
           if (tempID === usedName) {
             isUnique = false;
           }
+          return true;
         });
       });
 
@@ -65,12 +58,73 @@
       chatID = $('#chatID').val();
 
       user = userRef.child(chatID);
-      user.set({name:chatID, rank:'Captain', profile:profilePic});
+      user.set({name: chatID, rank: 'Captain', profile: profilePic});
     }
 
-    userRef.on('child_added', function(snapshot) {
+    function welcomeScreen() {
+      $('#welcome').text('Welcome, ' + chatID + '.');
+
+      $('.id-prompt').fadeOut('fast');
+      $('#login-success').fadeIn(3000);
+      $('#login-success').addClass('animate');
+
+      setTimeout(function() {
+        $('.login').fadeOut('slow');
+      }, 5000);
+    }
+
+    function chatListen() {
+      var message = $('#message');
+      var isMessage = false;
+
+      message.on('input', function() {
+        isMessage = true;
+      });
+
+      message.keypress(function(e) {
+        if (e.keyCode === 13 && isMessage) {
+          isMessage = false;
+          e.preventDefault();
+
+          messageRef.push({name: chatID, text: message.text(), pic: profilePic, messPic: messagePic});
+
+          messagePic = '';
+          message.text('');
+        }
+      });
+
+      messageRef.on('child_added', postMessages);
+    }
+
+    function postMessages(chatMessage) {
+      var data = chatMessage.val();
+      var textMessage = data.text;
+      var emotePicPath = data.messPic;
+      var profPicPath = data.pic;
+      var userName = data.name;
+      var messagePost = $('<div class="messagePost" id="' + userName + '"/>');
+      var emoticonPic = $('<img class="posted">');
+      var name = $('<a class="profile-link">');
+      var profPicture = $('<img>');
+
+      emoticonPic.attr('src', emotePicPath);
+      profPicture.attr('src', profPicPath);
+
+      name.text(userName + ': ');
+
+      messagePost.text(' ' + textMessage);
+      messagePost.prepend(emoticonPic);
+      messagePost.prepend(name);
+      messagePost.prepend(profPicture);
+
+      board.append(messagePost);
+
+      board[0].scrollTop = board[0].scrollHeight;
+    }
+
+    userRef.on('child_added', function(userJoining) {
       var listUser = $('<li class="profile-link">');
-      var user = snapshot.val();
+      var user = userJoining.val();
 
       listUser.attr('id', user.name);
       listUser.text(user.name);
@@ -83,73 +137,11 @@
       user.remove();
     };
 
-    userRef.on('child_removed', function(snapshot) {
-      var user = snapshot.val();
+    userRef.on('child_removed', function(userLeaving) {
+      var user = userLeaving.val();
 
       $('#' + user.name).remove();
     });
-
-    function chatListen() {
-      var message = $('#message');
-      var isMessage = false;
-
-      message.on('input', function() {
-        isMessage = true;
-      });
-
-      message.keypress(function(e) {
-        if (e.keyCode === 13 && isMessage) {
-          e.preventDefault();
-          isMessage = false;
-
-          if (messagePic == undefined) {
-            messageRef.push({name:chatID, text:message.text(), pic:profilePic});
-          }
-          else {
-            messageRef.push({name:chatID, text:message.text(), pic:profilePic, messPic:messagePic});
-          }
-
-          message.text('');
-        }
-      });
-
-      messageRef.limitToLast(10).on('child_added', postMessages);
-    }
-
-    function postMessages(chatMessage) {
-      var data = chatMessage.val();
-      var textMessage = data.text;
-      var emotePicPath = data.messPic;
-      var profPicPath = data.pic;
-      var userName = data.name;
-      var messagePost = $('<div class="messagePost" id="' + userName + '"/>');
-      var emoticonPic = $('<img id="posted">');
-      var name = $('<a class="profile-link">');
-      var profPicture = $('<img>');
-
-      if (emotePicPath) {
-        messagePic = undefined;
-
-        emoticonPic.attr('src', emotePicPath);
-
-        console.log(emoticonPic);
-
-        messagePost.prepend(emoticonPic);
-
-        console.log(messagePost);
-      }
-      name.text(userName + ': ');
-
-      profPicture.attr('src', profPicPath);
-
-      messagePost.text(' ' + textMessage);
-      messagePost.prepend(name);
-      messagePost.prepend(profPicture);
-
-      board.append(messagePost);
-
-      board[0].scrollTop = board[0].scrollHeight;
-    }
 
     $('.emo').on('click', function() {
       $('#'+ $(this).attr('id') + '-pics').animate({height: '500px'}, 500);
@@ -168,22 +160,22 @@
     $('.emote-menu img').on('click', function() {
       var postPic = $('<img>').attr('src', $(this).attr('src'));
 
-      messagePic = $(this).attr('src');
-
       $('#message').append(postPic);
       $('#message')[0].scrollTop = $('#message')[0].scrollHeight;
+
+      messagePic = $(this).attr('src');
     });
 
     $('body').on('click', '.profile-link', function() {
       if ($('.profile').css('display') != 'flex') {
         var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
 
-        userRef.once('value', function(snapshot) {
-          snapshot.forEach(function(childSnapshot) {
-            var user = childSnapshot.key();
+        userRef.once('value', function(allUsers) {
+          allUsers.forEach(function(specificUser) {
+            var user = specificUser.key();
 
             if (clickedUser === user) {
-              var userData = childSnapshot.val();
+              var userData = specificUser.val();
               var rank = $('#profile-top-name p').text();
 
               $('#bio-pic').attr('src', userData.profile);
@@ -209,4 +201,4 @@
 
     chatListen();
   });
-})();
+}());

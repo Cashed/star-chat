@@ -245,7 +245,7 @@ nav {
   margin-right: 20px;
 }
 
-.messagePost #posted {
+.messagePost .posted {
   margin-left: 10px;
 }
 
