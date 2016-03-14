@@ -14,24 +14,17 @@
 
     $('#chatID').keypress(function(e) {
       if (e.keyCode === 13) {
-        if (validate()){
-          var loginPic = $('<img>');
+        if (isValidName()){
 
-          profilePic = pics[Math.floor(Math.random() * 18)];
-          loginPic.attr('src', profilePic);
-          $('#login-success :first-child').after(loginPic);
+          createUser();
 
-          chatID = $('#chatID').val();
           $('#welcome').text('Welcome, ' + chatID + '.');
-
-          user = userRef.child(chatID);
-          user.set({name:chatID, rank:'Ensign', profile:profilePic});
 
           $('.id-prompt').fadeOut('fast');
           $('#login-success').fadeIn(3000);
           $('#login-success').addClass('animate');
 
-          setInterval(function() {
+          setTimeout(function() {
             $('.login').fadeOut('slow');
           }, 5000);
 
@@ -44,7 +37,7 @@
       }
     });
 
-    function validate() {
+    function isValidName() {
       var tempID = $('#chatID').val();
       var hasValidChars = /^[a-zA-Z\s]{2,10}$/.test(tempID);
       var isUnique = true;
@@ -60,6 +53,19 @@
       });
 
       return hasValidChars && isUnique;
+    }
+
+    function createUser() {
+      var loginPic = $('<img>');
+
+      profilePic = pics[Math.floor(Math.random() * 18)];
+      loginPic.attr('src', profilePic);
+      $('#login-success :first-child').after(loginPic);
+
+      chatID = $('#chatID').val();
+
+      user = userRef.child(chatID);
+      user.set({name:chatID, rank:'Captain', profile:profilePic});
     }
 
     userRef.on('child_added', function(snapshot) {
@@ -110,43 +116,38 @@
       messageRef.limitToLast(10).on('child_added', postMessages);
     }
 
-    function postMessages(snapshot) {
-        var messagePost = $('<div class="messagePost" id=' + chatID + '>');
-        var name = $('<a class="profile-link">');
-        var picture = $('<img>');
-        var data = snapshot.val();
-        var message = data.text;
-        var messPicInfo = data.messPic;
+    function postMessages(chatMessage) {
+      var data = chatMessage.val();
+      var textMessage = data.text;
+      var emotePicPath = data.messPic;
+      var profPicPath = data.pic;
+      var userName = data.name;
+      var messagePost = $('<div class="messagePost" id="' + userName + '"/>');
+      var emoticonPic = $('<img id="posted">');
+      var name = $('<a class="profile-link">');
+      var profPicture = $('<img>');
 
-        if (messPicInfo != undefined) {
-          var postPic = $('<img id="posted">');
+      if (emotePicPath) {
+        messagePic = undefined;
 
-          messagePic = undefined;
+        emoticonPic.attr('src', emotePicPath);
 
-          postPic.attr('src', data.messPic);
+        console.log(emoticonPic);
 
-          name.text(data.name + ':');
+        messagePost.prepend(emoticonPic);
 
-          picture.attr('src', data.pic);
+        console.log(messagePost);
+      }
+      name.text(userName + ': ');
 
-          messagePost.text(message);
-          messagePost.prepend(postPic);
-          messagePost.prepend(name);
-          messagePost.prepend(picture);
+      profPicture.attr('src', profPicPath);
 
-          board.append(messagePost);
-        }
-        else {
-          name.text(data.name + ': ');
+      messagePost.text(' ' + textMessage);
+      messagePost.prepend(name);
+      messagePost.prepend(profPicture);
 
-          picture.attr('src', data.pic);
+      board.append(messagePost);
 
-          messagePost.text(' ' + message);
-          messagePost.prepend(name);
-          messagePost.prepend(picture);
-
-          board.append(messagePost);
-        }
       board[0].scrollTop = board[0].scrollHeight;
     }
 
