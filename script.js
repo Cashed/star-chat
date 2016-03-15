@@ -32,18 +32,7 @@
     function isValidName() {
       var tempID = $('#chatID').val();
       var hasValidChars = /^[a-zA-Z\s]{2,10}$/.test(tempID);
-      var isUnique = true;
-
-      userRef.once('value', function(allUsers) {
-        allUsers.forEach(function(specificUser) {
-          var usedName = specificUser.key();
-
-          if (tempID === usedName) {
-            isUnique = false;
-          }
-          return true;
-        });
-      });
+      var isUnique = !Boolean(returnUser(tempID));  //so terrible
 
       return hasValidChars && isUnique;
     }
@@ -93,7 +82,7 @@
         }
       });
 
-      messageRef.on('child_added', postMessages);
+      messageRef.limitToLast(10).on('child_added', postMessages);
     }
 
     function postMessages(chatMessage) {
@@ -120,6 +109,24 @@
       board.append(messagePost);
 
       board[0].scrollTop = board[0].scrollHeight;
+    }
+
+    function returnUser(desiredUser) {
+      var user = false;
+
+      userRef.once('value', function(allUsers) {
+        allUsers.forEach(function(specificUser) {
+          var listedUser = specificUser.key();
+
+          if (desiredUser === listedUser) {
+            user = specificUser;
+
+            return true;
+          }
+        });
+      });
+
+      return user;
     }
 
     userRef.on('child_added', function(userJoining) {
@@ -169,8 +176,10 @@
     $('body').on('click', '.profile-link', function() {
       if ($('.profile').css('display') != 'flex') {
         var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
+        var userData = returnUser(clickedUser).val();
+        var rank = $('#profile-top-name p').text();
 
-        if(clickedUser === chatID) {
+        if (clickedUser === chatID) {
           $('#edit-bio').css('display', 'block');
           $('#profPic-select').css('display', 'block');
         }
@@ -179,25 +188,12 @@
           $('#profPic-select').css('display', 'none');
         }
 
-        userRef.once('value', function(allUsers) {
-          allUsers.forEach(function(specificUser) {
-            var user = specificUser.key();
+        $('#bio-pic').attr('src', userData.profile);
+        $('#profile-top-name h1').text(userData.name);
+        $('#profile-top-name p').text(rank + userData.rank);
+        $('#bio').text(userData.bio);
 
-            if (clickedUser === user) {
-              var userData = specificUser.val();
-              var rank = $('#profile-top-name p').text();
-
-              $('#bio-pic').attr('src', userData.profile);
-              $('#profile-top-name h1').text(userData.name);
-              $('#profile-top-name p').text(rank + userData.rank);
-              $('#bio').text(userData.bio);
-
-              $('.profile').css('display', 'flex');
-
-              return true;
-            }
-          });
-        });
+        $('.profile').css('display', 'flex');
       }
     });
 
