@@ -4,12 +4,12 @@
     var chatID;
     var profilePic;
     var currentStatus;
-    var messagePic = '';
-    var board = $('#board');
     var roomRef = new Firebase('https://star-chat.firebaseio.com/');
     var messageRef = roomRef.child('messages');
     var userRef = roomRef.child('users');
     var user = userRef.child('temp');
+    var board = $('#board');
+    var messagePic = '';
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
 
     $('#chatID').keypress(function(e) {
@@ -170,6 +170,13 @@
       if ($('.profile').css('display') != 'flex') {
         var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
 
+        if(clickedUser === chatID) {
+          $('#edit-bio').css('display', 'block');
+        }
+        else {
+          $('#edit-bio').css('display', 'none');
+        }
+
         userRef.once('value', function(allUsers) {
           allUsers.forEach(function(specificUser) {
             var user = specificUser.key();
@@ -181,6 +188,7 @@
               $('#bio-pic').attr('src', userData.profile);
               $('#profile-top-name h1').text(userData.name);
               $('#profile-top-name p').text(rank + userData.rank);
+              $('#bio').text(userData.bio);
 
               $('.profile').css('display', 'flex');
 
@@ -191,12 +199,29 @@
       }
     });
 
-    $('.profile').on('click', function() {
-      $(this).css('display', 'none');
+    $('#exit-profile').on('click', function() {
+      $('.profile').css('display', 'none');
 
       $('#bio-pic').attr('src', '');
       $('#profile-top-name h1').text('');
       $('#profile-top-name p').text('Rank: ');
+      $('#bio').text('');
+    });
+
+    $('#edit-bio').on('click', function() {
+      if ($('#bio').attr('contenteditable') === 'false') {
+        $('#bio').attr('contenteditable', 'true');
+        $(this).text('Save');
+      }
+      else {
+        $('#bio').attr('contenteditable', 'false');
+        $(this).text('Edit');
+        userRef.child($('#profile-top-name h1').text()).update({bio: $('#bio').text()});
+      }
+    });
+
+    $('#bio').keypress(function(){
+      return this.innerHTML.length < $(this).attr('max');
     });
 
     chatListen();
