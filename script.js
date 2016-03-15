@@ -224,6 +224,18 @@
       return this.innerHTML.length < $(this).attr('max');
     });
 
+    $('#profPic-select').on('click', function() {
+      $('#profile-menu').animate({height: '305px'}, 500)
+      .mouseleave(function() {
+        $(this).animate({height: '0'}, 500);
+      });
+    });
+
+    $('#profile-menu img').on('click', function() {
+      userRef.child(chatID).update({profile: $(this).attr('src')});
+      $('#bio-pic').attr('src', $(this).attr('src'));
+    });
+
     chatListen();
   });
 }());
