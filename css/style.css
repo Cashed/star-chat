@@ -159,7 +159,7 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 10%;
+  width: 11%;
   font-family: 'LCARS';
 }
 
@@ -330,7 +330,7 @@ nav {
   position: absolute;
   padding-top: 5%;
   top: 150px;
-  left: 10%;
+  left: 11%;
   z-index: 1;
   width: 80%;
   background: black;
@@ -513,6 +513,8 @@ nav {
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
 	border-top: 10px solid #FF9900;
+  cursor: pointer;
+  cursor: hand;
 }
 
 #profPic-select:hover {
