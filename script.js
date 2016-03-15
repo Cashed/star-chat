@@ -172,9 +172,11 @@
 
         if(clickedUser === chatID) {
           $('#edit-bio').css('display', 'block');
+          $('#profPic-select').css('display', 'block');
         }
         else {
           $('#edit-bio').css('display', 'none');
+          $('#profPic-select').css('display', 'none');
         }
 
         userRef.once('value', function(allUsers) {
