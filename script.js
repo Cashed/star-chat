@@ -236,6 +236,7 @@
     $('#profile-menu img').on('click', function() {
       userRef.child(chatID).update({profile: $(this).attr('src')});
       $('#bio-pic').attr('src', $(this).attr('src'));
+      profilePic = $(this).attr('src');
     });
 
     chatListen();
