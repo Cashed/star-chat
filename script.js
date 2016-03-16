@@ -116,9 +116,7 @@
 
       userRef.once('value', function(allUsers) {
         allUsers.forEach(function(specificUser) {
-          var listedUser = specificUser.key();
-
-          if (desiredUser === listedUser) {
+          if (desiredUser === specificUser.key()) {
             user = specificUser;
 
             return true;
@@ -214,7 +212,7 @@
       else {
         $('#bio').attr('contenteditable', 'false');
         $(this).text('Edit');
-        userRef.child($('#profile-top-name h1').text()).update({bio: $('#bio').text()});
+        userRef.child(chatID).update({bio: $('#bio').text()});
       }
     });
 
@@ -223,7 +221,7 @@
     });
 
     $('#profPic-select').on('click', function() {
-      $('#profile-menu').animate({height: '305px'}, 500)
+      $('#profile-menu').animate({height: '300px'}, 500)
       .mouseleave(function() {
         $(this).animate({height: '0'}, 500);
       });

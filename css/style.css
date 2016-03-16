@@ -541,3 +541,13 @@ nav {
 #profile-menu img:hover {
   border: 3px solid #FF9900;
 }
+
+/*    ----- SHIP UI -----   */
+
+ship-ui {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  
+}
