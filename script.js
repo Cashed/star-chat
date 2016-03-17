@@ -10,6 +10,10 @@
     var user = userRef.child('temp');
     var board = $('#board');
     var messagePic = '';
+    var resources = 30;
+    var shields = 0;
+    var weapons = 0;
+    var warp = 0;
     var pics = ['media/profilePics/709.jpg', 'media/profilePics/archer.jpg', 'media/profilePics/cardassian.jpg', 'media/profilePics/data.jpg', 'media/profilePics/deanna.jpg', 'media/profilePics/doctor.jpg', 'media/profilePics/ferengi.jpg', 'media/profilePics/geordi.jpg', 'media/profilePics/janeway.jpg', 'media/profilePics/locutus.jpg', 'media/profilePics/neelix.jpg', 'media/profilePics/phlox.jpg', 'media/profilePics/picard.jpg', 'media/profilePics/q.jpg', 'media/profilePics/riker.jpg', 'media/profilePics/tpol.jpg', 'media/profilePics/wesley.jpg', 'media/profilePics/worf.jpg'];
 
     $('#chatID').keypress(function(e) {
@@ -116,9 +120,7 @@
 
       userRef.once('value', function(allUsers) {
         allUsers.forEach(function(specificUser) {
-          var listedUser = specificUser.key();
-
-          if (desiredUser === listedUser) {
+          if (desiredUser === specificUser.key()) {
             user = specificUser;
 
             return true;
@@ -236,31 +238,83 @@
     });
 
     $('#shield-down').on('click', function() {
-      $('.shields .status-bar:last-child').remove();
+      if (shields > 0) {
+        $('.shields .status-bar:last-child').remove();
+
+        resources += 1;
+        shields -= 1;
+
+        $('#resource-pool').text(resources);
+        $('#shield-value').text(shields);
+      }
     });
 
     $('#shield-up').on('click', function() {
-      var statusBar = $('<div class="status-bar">');
-      $('.shields').append(statusBar);
+      if (resources > 0) {
+        var statusBar = $('<div class="status-bar">');
+
+        $('.shields').append(statusBar);
+
+        resources -= 1;
+        shields += 1;
+
+        $('#resource-pool').text(resources);
+        $('#shield-value').text(shields);
+      }
     });
 
     $('#weapons-down').on('click', function() {
-      $('.weapons .status-bar:last-child').remove();
+      if (weapons > 0){
+        $('.weapons .status-bar:last-child').remove();
+
+        resources += 1;
+        weapons -= 1;
+
+        $('#resource-pool').text(resources);
+        $('#weapons-value').text(weapons);
+      }
     });
 
     $('#weapons-up').on('click', function() {
-      var statusBar = $('<div class="status-bar">');
-      $('.weapons').append(statusBar);
+      if (resources > 0) {
+        var statusBar = $('<div class="status-bar">');
+
+        $('.weapons').append(statusBar);
+
+        resources -= 1;
+        weapons += 1;
+
+        $('#resource-pool').text(resources);
+        $('#weapons-value').text(weapons);
+      }
     });
 
     $('#warp-down').on('click', function() {
-      $('.warp .status-bar:last-child').remove();
+      if (warp > 0) {
+        $('.warp .status-bar:last-child').remove();
+
+        resources += 1;
+        warp -= 1;
+
+        $('#resource-pool').text(resources);
+        $('#warp-value').text(warp);
+      }
     });
 
     $('#warp-up').on('click', function() {
-      var statusBar = $('<div class="status-bar">');
-      $('.warp').append(statusBar);
+      if (resources > 0) {
+        var statusBar = $('<div class="status-bar">');
+
+        $('.warp').append(statusBar);
+
+        resources -= 1;
+        warp += 1;
+
+        $('#resource-pool').text(resources);
+        $('#warp-value').text(warp);
+      }
     });
+
 
     chatListen();
   });
