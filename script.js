@@ -138,7 +138,7 @@
       var hasValidChars = /^[a-zA-Z\s]{2,16}$/.test(testName);
       var isUnique = true;
 
-      shipRef.once(function(allShips) {
+      shipRef.once('value', function(allShips) {
         allShips.forEach(function(ship) {
           if(testName === ship.key()) {
             isUnique = false;
