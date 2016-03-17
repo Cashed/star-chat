@@ -8,9 +8,11 @@
     var messageRef = roomRef.child('messages');
     var userRef = roomRef.child('users');
     var user = userRef.child('temp');
+    var ship = user.child('something')
     var board = $('#board');
     var messagePic = '';
-    var resources = 35;
+    var shipName = '';
+    var resources = 30;
     var shields = 0;
     var weapons = 0;
     var warp = 0;
@@ -19,7 +21,6 @@
     $('#chatID').keypress(function(e) {
       if (e.keyCode === 13) {
         if (isValidName()){
-
           createUser();
 
           welcomeScreen();
@@ -235,6 +236,18 @@
       userRef.child(chatID).update({profile: $(this).attr('src')});
       $('#bio-pic').attr('src', $(this).attr('src'));
       profilePic = $(this).attr('src');
+    });
+
+    $('#explorer-mode').on ('click', function() {
+      $('.play-options').fadeOut('slow');
+    });
+
+    $('#ship-name').keypress(function(e) {
+      if (e.keyCode === 13) {
+        ship = user.child($(this).val());
+        ship.set({model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources});
+        $('#ship-name').val('');
+      }
     });
 
     $('#shield-down').on('click', function() {

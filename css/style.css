@@ -334,7 +334,7 @@ nav {
   padding-top: 5%;
   top: 150px;
   left: 11%;
-  z-index: 1;
+  z-index: 3;
   width: 85%;
   background: black;
   font-size: 42pt;
@@ -558,7 +558,7 @@ nav {
   background-color: black;
   position: absolute;
   right: 65px;
-  z-index: 1;
+  z-index: 2;
 }
 
 #explorer-mode {
@@ -575,6 +575,34 @@ nav {
 
 #explorer-mode:hover {
   border: 3px solid #FF9900;
+}
+
+.explore-intro {
+  width: 25%;
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  position: absolute;
+  right: 65px;
+  z-index: 1;
+  color: #FF9900;
+}
+
+.ship-intro {
+  width: 85%;
+  font-size: 20pt;
+}
+
+.ship-intro #ship-name {
+border-radius: 10px;
+width: 100%;
+background-color: black;
+border: none;
+outline: none;
 }
 
 

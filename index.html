@@ -123,6 +123,12 @@
     <section class='play-options'>
       <button id='explorer-mode'>Explore</button>
     </section>
+    <section class='explore-intro'>
+      <div class='ship-intro'>
+        <label>Ship Name: </label>
+        <input type='text' id='ship-name' maxlength='16'>
+      </div>
+    </section>
     <section class='ship-ui'>
       <div class='resources'>Resources
         <div id='resource-pool'>30</div>
@@ -161,7 +167,7 @@
     <section class='login'>
       <img class='id-prompt' src='media/federation.gif-c200' height='80px'>
       <label class='id-prompt'>Starfleet ID: </label>
-      <input class='id-prompt' type='text' id='chatID' autofocus required>
+      <input class='id-prompt' type='text' id='chatID' autofocus='autofocus' required>
       <div class='id-prompt' id='id-fail'>Must be unique, only letters and spaces, character count 2 - 10</div>
       <div id='login-success'>
         <h3>LOGIN SUCCESS</h3>
