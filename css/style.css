@@ -335,7 +335,7 @@ nav {
   top: 150px;
   left: 11%;
   z-index: 1;
-  width: 80%;
+  width: 85%;
   background: black;
   font-size: 42pt;
   color: #FF9900;
@@ -545,6 +545,39 @@ nav {
   border: 3px solid #FF9900;
 }
 
+/*    ----- PLAY OPTIONS -----    */
+
+.play-options {
+  width: 25%;
+  height: 640px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  position: absolute;
+  right: 65px;
+  z-index: 1;
+}
+
+#explorer-mode {
+  border: 3px solid black;
+  outline: none;
+  border-radius: 10px;
+  height: 150px;
+  width: 300px;
+  background: radial-gradient(transparent, black), url('../media/map.jpg') no-repeat;
+  color: #FF9900;
+  font-size: 24pt;
+  text-shadow: 4px 4px 4px black;
+}
+
+#explorer-mode:hover {
+  border: 3px solid #FF9900;
+}
+
+
 /*    ----- SHIP UI -----   */
 
 .ship-ui {
@@ -556,7 +589,6 @@ nav {
   align-items: flex-end;
   justify-content: center;
   color: #FF9900;
-  border-left:
 }
 
 .resources {
@@ -775,7 +807,7 @@ nav {
 
 .set-stats {
   height: 135px;
-  width: 15%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
