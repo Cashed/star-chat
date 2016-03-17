@@ -235,6 +235,33 @@
       profilePic = $(this).attr('src');
     });
 
+    $('#shield-down').on('click', function() {
+      $('.shields .status-bar:last-child').remove();
+    });
+
+    $('#shield-up').on('click', function() {
+      var statusBar = $('<div class="status-bar">');
+      $('.shields').append(statusBar);
+    });
+
+    $('#weapons-down').on('click', function() {
+      $('.weapons .status-bar:last-child').remove();
+    });
+
+    $('#weapons-up').on('click', function() {
+      var statusBar = $('<div class="status-bar">');
+      $('.weapons').append(statusBar);
+    });
+
+    $('#warp-down').on('click', function() {
+      $('.warp .status-bar:last-child').remove();
+    });
+
+    $('#warp-up').on('click', function() {
+      var statusBar = $('<div class="status-bar">');
+      $('.warp').append(statusBar);
+    });
+
     chatListen();
   });
 }());
