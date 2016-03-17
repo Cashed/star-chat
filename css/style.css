@@ -553,14 +553,15 @@ nav {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: center;
   color: #FF9900;
+  border-left:
 }
 
 .resources {
   height: 85px;
-  width: 40%;
+  width: 44%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -593,6 +594,14 @@ nav {
   color: #9999FF;
 }
 
+.energy-max {
+  position: absolute;
+  right: 400px;
+  bottom: 111px;
+  height: 180px;
+  border-right: 2px solid #FF9900;
+}
+
 .shields {
   height: 445px;
   width: 23%;
@@ -615,6 +624,7 @@ nav {
 
 #shield-controls span {
   margin-bottom: 10px;
+  color: #FF9900;
 }
 
 #shield-up {
@@ -668,6 +678,7 @@ nav {
 
 #weapon-controls span {
   margin-bottom: 10px;
+  color: #FF9900;
 }
 
 #weapons-up {
@@ -721,6 +732,7 @@ nav {
 
 #warp-controls span {
   margin-bottom: 10px;
+  color: #FF9900;
 }
 
 #warp-up {
@@ -752,16 +764,39 @@ nav {
   font-size: 16pt;
 }
 
-.ship-science {
+.science {
   height: 445px;
-  width: 23%;
-  background-color: lightblue;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
-#science-controls {
+.set-stats {
   height: 135px;
-  width: 23%;
-  background-color: yellow;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: #CC99CC;
+  font-size: 11pt;
+}
+
+.set-stats #set {
+  height: 60px;
+  width: 60px;
+  margin: 30px auto;
+  background-color: #FF9966;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  color: black;
+}
+
+.set-stats #set:hover {
+  background-color: #F36823;
 }
 
 .status-bar {

@@ -10,7 +10,7 @@
     var user = userRef.child('temp');
     var board = $('#board');
     var messagePic = '';
-    var resources = 30;
+    var resources = 35;
     var shields = 0;
     var weapons = 0;
     var warp = 0;
