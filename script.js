@@ -7,8 +7,9 @@
     var roomRef = new Firebase('https://star-chat.firebaseio.com/');
     var messageRef = roomRef.child('messages');
     var userRef = roomRef.child('users');
+    var shipRef = roomRef.child('ships')
     var user = userRef.child('temp');
-    var ship = user.child('something')
+    var ship = shipRef.child('temp');
     var board = $('#board');
     var messagePic = '';
     var shipName = '';
@@ -132,6 +133,23 @@
       return user;
     }
 
+    function shipNameValid() {
+      var testName = $('#ship-name').val();
+      var hasValidChars = /^[a-zA-Z\s]{2,16}$/.test(testName);
+      var isUnique = true;
+
+      shipRef.once(function(allShips) {
+        allShips.forEach(function(ship) {
+          if(testName === ship.key()) {
+            isUnique = false;
+
+            return true;
+          }
+        });
+      });
+      return hasValidChars && isUnique;
+    }
+
     userRef.on('child_added', function(userJoining) {
       var listUser = $('<li class="profile-link">');
       var user = userJoining.val();
@@ -244,9 +262,16 @@
 
     $('#ship-name').keypress(function(e) {
       if (e.keyCode === 13) {
-        ship = user.child($(this).val());
-        ship.set({model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources});
-        $('#ship-name').val('');
+        if (shipNameValid()) {
+          shipName = $(this).val();
+          ship = shipRef.child(shipName);
+
+          ship.set({model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources});
+
+          user.update({ship: shipName});
+
+          $('#ship-name').val('');
+        }
       }
     });
 
