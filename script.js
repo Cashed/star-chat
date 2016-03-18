@@ -21,39 +21,65 @@
 
     $('#chatID').keypress(function(e) {
       if (e.keyCode === 13) {
-        if (isValidName()){
           createUser();
+        }
+    });
+
+    $('#ship-name').keypress(function(e) {
+      if (e.keyCode === 13) {
+          createShip();
+      }
+    });
+
+    function createUser() {
+      var tempID = $('#chatID').val();
+      var hasValidChars = /^[a-zA-Z\s]{2,10}$/.test(tempID);
+
+      userRef.child(tempID).transaction(function(currentData) {
+        if(currentData === null && hasValidChars) {
+          var loginPic = $('<img>');
+
+          profilePic = pics[Math.floor(Math.random() * 18)];
+          loginPic.attr('src', profilePic);
+          $('#login-success :first-child').after(loginPic);
+
+          chatID = tempID;
+          user = userRef.child(chatID);
 
           welcomeScreen();
 
-          board[0].scrollTop = board[0].scrollHeight;
+          return {name: chatID, rank: 'Captain', profile: profilePic};
         }
         else {
           $('#id-fail').css('display', 'flex');
           $('#chatID').val('');
+          
+          return;
         }
-      }
-    });
-
-    function isValidName() {
-      var tempID = $('#chatID').val();
-      var hasValidChars = /^[a-zA-Z\s]{2,10}$/.test(tempID);
-      var isUnique = !Boolean(returnUser(tempID));  //so terrible
-
-      return hasValidChars && isUnique;
+      });
     }
 
-    function createUser() {
-      var loginPic = $('<img>');
+    function createShip() {
+      var tempID = $('#ship-name').val();
+      var hasValidChars = /^[a-zA-Z\s]{2,16}$/.test(tempID);
 
-      profilePic = pics[Math.floor(Math.random() * 18)];
-      loginPic.attr('src', profilePic);
-      $('#login-success :first-child').after(loginPic);
+      shipRef.child(tempID).transaction(function(currentData) {
+        if(currentData === null && hasValidChars) {
+          shipName = tempID;
+          ship = shipRef.child(shipName);
 
-      chatID = $('#chatID').val();
+          user.update({ship: shipName});
 
-      user = userRef.child(chatID);
-      user.set({name: chatID, rank: 'Captain', profile: profilePic});
+          $('#ship-name').val('');
+
+          return {command: chatID, model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources};
+        }
+        else {
+          $('#ship-name').val('');
+          alert('Name is not valid or unique');
+          return;
+        }
+      });
     }
 
     function welcomeScreen() {
@@ -62,6 +88,8 @@
       $('.id-prompt').fadeOut('fast');
       $('#login-success').fadeIn(3000);
       $('#login-success').addClass('animate');
+
+      board[0].scrollTop = board[0].scrollHeight;
 
       setTimeout(function() {
         $('.login').fadeOut('slow');
@@ -133,21 +161,22 @@
       return user;
     }
 
-    function shipNameValid() {
-      var testName = $('#ship-name').val();
-      var hasValidChars = /^[a-zA-Z\s]{2,16}$/.test(testName);
-      var isUnique = true;
+    function returnShip(desiredShip) {
+      var ship = false;
 
       shipRef.once('value', function(allShips) {
-        allShips.forEach(function(ship) {
-          if(testName === ship.key()) {
-            isUnique = false;
+        allShips.forEach(function(specificShip) {
+          console.log(specificShip.key());
+          if (desiredShip === specificShip.key()) {
+            console.log('found match');
+            ship = specificShip;
 
             return true;
           }
         });
       });
-      return hasValidChars && isUnique;
+
+      return ship;
     }
 
     userRef.on('child_added', function(userJoining) {
@@ -258,21 +287,6 @@
 
     $('#explorer-mode').on ('click', function() {
       $('.play-options').fadeOut('slow');
-    });
-
-    $('#ship-name').keypress(function(e) {
-      if (e.keyCode === 13) {
-        if (shipNameValid()) {
-          shipName = $(this).val();
-          ship = shipRef.child(shipName);
-
-          ship.set({model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources});
-
-          user.update({ship: shipName});
-
-          $('#ship-name').val('');
-        }
-      }
     });
 
     $('#shield-down').on('click', function() {
