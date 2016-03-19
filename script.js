@@ -53,7 +53,7 @@
         else {
           $('#id-fail').css('display', 'flex');
           $('#chatID').val('');
-          
+
           return;
         }
       });
@@ -70,13 +70,18 @@
 
           user.update({ship: shipName});
 
-          $('#ship-name').val('');
+          $('#ship-name').css('border', 'none').attr('readonly', 'readonly');
+          $('#ship-name').css('width', '345px');
+          $('.ship-intro').animate({'margin-top': '0px'}, 1000);
+          setTimeout(function() {
+            $('#ship-explain').fadeIn('slow');
+          }, 1500);
 
           return {command: chatID, model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources};
         }
         else {
           $('#ship-name').val('');
-          alert('Name is not valid or unique');
+          $('#invalid-ship').css('display', 'block');
           return;
         }
       });
@@ -146,58 +151,57 @@
     }
 
     function returnUser(desiredUser) {
-      var user = false;
+      var foundUser = false;
 
       userRef.once('value', function(allUsers) {
         allUsers.forEach(function(specificUser) {
           if (desiredUser === specificUser.key()) {
-            user = specificUser;
+            foundUser = specificUser;
 
             return true;
           }
         });
       });
 
-      return user;
+      return foundUser;
     }
 
     function returnShip(desiredShip) {
-      var ship = false;
+      var foundShip = false;
 
       shipRef.once('value', function(allShips) {
         allShips.forEach(function(specificShip) {
-          console.log(specificShip.key());
           if (desiredShip === specificShip.key()) {
-            console.log('found match');
-            ship = specificShip;
+            foundShip = specificShip;
 
             return true;
           }
         });
       });
 
-      return ship;
+      return foundShip;
     }
 
     userRef.on('child_added', function(userJoining) {
       var listUser = $('<li class="profile-link">');
-      var user = userJoining.val();
+      var newUser = userJoining.val();
 
-      listUser.attr('id', user.name);
-      listUser.text(user.name);
+      listUser.attr('id', newUser.name);
+      listUser.text(newUser.name);
       listUser.append('<i class="fa-li fa fa-crosshairs">');
 
       $('.chat-users').append(listUser);
     });
 
     window.onbeforeunload = function() {
+      ship.remove();
       user.remove();
     };
 
     userRef.on('child_removed', function(userLeaving) {
-      var user = userLeaving.val();
+      var departingUser = userLeaving.val();
 
-      $('#' + user.name).remove();
+      $('#' + departingUser.name).remove();
     });
 
     $('.emo').on('click', function() {
@@ -299,6 +303,10 @@
         $('#resource-pool').text(resources);
         $('#shield-value').text(shields);
       }
+    });
+
+    $('#instr-read').on('click', function() {
+      $('.explore-intro').fadeOut('slow');
     });
 
     $('#shield-up').on('click', function() {

@@ -335,7 +335,7 @@ nav {
   top: 150px;
   left: 11%;
   z-index: 3;
-  width: 85%;
+  width: 90%;
   background: black;
   font-size: 42pt;
   color: #FF9900;
@@ -548,7 +548,7 @@ nav {
 /*    ----- PLAY OPTIONS -----    */
 
 .play-options {
-  width: 25%;
+  width: 29%;
   height: 640px;
   display: flex;
   flex-direction: row;
@@ -578,13 +578,8 @@ nav {
 }
 
 .explore-intro {
-  width: 25%;
+  width: 29%;
   height: 640px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   background-color: black;
   position: absolute;
   right: 65px;
@@ -593,18 +588,94 @@ nav {
 }
 
 .ship-intro {
+  margin-top: 250px;
+  margin-bottom: 300;
+  margin-left: auto;
+  margin-right: auto;
   width: 85%;
   font-size: 20pt;
 }
 
 .ship-intro #ship-name {
-border-radius: 10px;
-width: 100%;
-background-color: black;
-border: none;
-outline: none;
+  border-radius: 10px;
+  width: 300px;
+  background-color: black;
+  outline: none;
 }
 
+.ship-intro #ship-explain {
+  display: none;
+  font-size: 14pt;
+  font-family: sans-serif;
+}
+
+#ship-explain ul {
+  list-style: none;
+  padding: 5px;
+  margin: 0 0 0 10px;
+}
+
+#ship-explain p {
+  margin: 10px;
+}
+
+.ship-intro #invalid-ship {
+  display: none;
+}
+
+#ship-explain .green {
+  font-weight: bold;
+  color: #91FF91;
+}
+
+#ship-explain .blue {
+  font-weight: bold;
+  color: #9999FF;
+}
+
+#ship-explain .red {
+  font-weight: bold;
+  color: #CC6666;
+}
+
+#ship-explain .purple {
+  font-weight: bold;
+  color: #CC99CC;
+}
+
+#ship-explain .yellow {
+  font-weight: bold;
+  color: #FFFF90;
+}
+
+#ship-explain .darkblue {
+  font-weight: bold;
+  color: darkblue;
+}
+
+#ship-explain .darkred {
+  font-weight: bold;
+  color: darkred;
+}
+
+#ship-explain .white {
+  font-weight: bold;
+  color: white;
+}
+
+#ship-explain #instr-read {
+  font-family: 'Montalban';
+  color: black;
+  background-color: #FF9966;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+#ship-explain #instr-read:hover {
+  background-color: #F36823;
+}
 
 /*    ----- SHIP UI -----   */
 

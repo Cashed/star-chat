@@ -127,6 +127,31 @@
       <div class='ship-intro'>
         <label>Ship Name: </label>
         <input type='text' id='ship-name' maxlength='16'>
+        <div id='invalid-ship'>Must be unique, characters and spaces only, char count 2-16.</div>
+        <div id='ship-explain'>
+          <p>Congratulations. You have been awarded command of a <span class='green'>Constitution-Class Heavy Cruiser</span>.</p>
+          <p>Your ship comes equipped with:
+            <ul class='ship-components'>
+              <li><span class='blue'>Deflector Shields</span>
+                <ul>
+                  <li>mitigate incoming attacks</li>
+                </ul>
+              </li>
+              <li><span class='red'>Spatial Torpedoes</span>
+                <ul>
+                  <li>a primary weapon for ship-on-ship damage</li>
+                </ul>
+              </li>
+              <li><span class='purple'>Warp Core</span>
+                <ul>
+                  <li>capable of a 5.2 warp factor for escaping or chasing enemy ships.</li>
+                </ul>
+              </li>
+            </ul>
+          <p>These components do consume the finite amount of <span class='white'>resources</span> you have on your ship.</p>
+          <p>In order to procure more, you may want to try <span class='yellow'>trading</span> with <span class='darkblue'>nearby vessels</span> who are also exploring. Or if they are hostile, you may have to resort to taking their resources through <span class='darkred'>battle</span>, lest they take yours for themselves.</p>
+          <button id='instr-read'>OK</button>
+        </div>
       </div>
     </section>
     <section class='ship-ui'>
