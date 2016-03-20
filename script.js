@@ -3,7 +3,7 @@
   $(document).ready(function() {
     var chatID;
     var profilePic;
-    var currentStatus;
+    var status;
     var roomRef = new Firebase('https://star-chat.firebaseio.com/');
     var messageRef = roomRef.child('messages');
     var userRef = roomRef.child('users');
@@ -14,6 +14,7 @@
     var messagePic = '';
     var shipName = '';
     var resources = 30;
+    var energyMax = 15;
     var shields = 0;
     var weapons = 0;
     var warp = 0;
@@ -46,9 +47,11 @@
           chatID = tempID;
           user = userRef.child(chatID);
 
+          status = 'spectate';
+
           welcomeScreen();
 
-          return {name: chatID, rank: 'Captain', profile: profilePic};
+          return {name: chatID, status: status, rank: 'Captain', profile: profilePic};
         }
         else {
           $('#id-fail').css('display', 'flex');
@@ -69,6 +72,7 @@
           ship = shipRef.child(shipName);
 
           user.update({ship: shipName});
+          $('#ship-id').text(shipName);
 
           $('#ship-name').css('border', 'none').attr('readonly', 'readonly');
           $('#ship-name').css('width', '345px');
@@ -188,7 +192,6 @@
 
       listUser.attr('id', newUser.name);
       listUser.text(newUser.name);
-      listUser.append('<i class="fa-li fa fa-crosshairs">');
 
       $('.chat-users').append(listUser);
     });
@@ -236,10 +239,20 @@
         if (clickedUser === chatID) {
           $('#edit-bio').css('display', 'block');
           $('#profPic-select').css('display', 'block');
+
+          $('#trade').css('display', 'none');
+          $('#battle').css('display', 'none');
+
+          $('#profile-bottom').css('height', 'auto');
         }
         else {
           $('#edit-bio').css('display', 'none');
           $('#profPic-select').css('display', 'none');
+
+          $('#trade').css('display', 'block');
+          $('#battle').css('display', 'block');
+
+          $('#profile-bottom').css('height', '140px');
         }
 
         $('#bio-pic').attr('src', userData.profile);
@@ -307,10 +320,15 @@
 
     $('#instr-read').on('click', function() {
       $('.explore-intro').fadeOut('slow');
+
+      status = 'explore';
+      user.update({status: status});
+
+      $('#' + chatID).append('<i class="fa-li fa fa-crosshairs">');
     });
 
     $('#shield-up').on('click', function() {
-      if (resources > 0) {
+      if (resources > 0 && shields < energyMax) {
         var statusBar = $('<div class="status-bar">');
 
         $('.shields').append(statusBar);
@@ -336,7 +354,7 @@
     });
 
     $('#weapons-up').on('click', function() {
-      if (resources > 0) {
+      if (resources > 0 && weapons < energyMax) {
         var statusBar = $('<div class="status-bar">');
 
         $('.weapons').append(statusBar);
@@ -362,7 +380,7 @@
     });
 
     $('#warp-up').on('click', function() {
-      if (resources > 0) {
+      if (resources > 0 && warp < energyMax) {
         var statusBar = $('<div class="status-bar">');
 
         $('.warp').append(statusBar);

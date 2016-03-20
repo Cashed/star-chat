@@ -203,6 +203,10 @@ nav {
   cursor: hand;
 }
 
+.chat-users li .fa {
+  color: darkred;
+}
+
 /*    ----- CHAT ROOM -----   */
 
 .chat-room {
@@ -312,6 +316,7 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  z-index: 3;
 }
 
 .emote-menu img {
@@ -507,6 +512,28 @@ nav {
     content: "";
 }
 
+#trade {
+  position: absolute;
+  bottom: 15px;
+  left: 40px;
+  width: 140px;
+  border-radius: 10px;
+  outline: none;
+  background-color: #FFFF90;
+  text-shadow: 1px 1px 1px black;
+}
+
+#battle {
+  position: absolute;
+  bottom: 15px;
+  left: 220px;
+  width: 140px;
+  border-radius: 10px;
+  outline: none;
+  background-color: darkred;
+  text-shadow: 1px 1px 1px black;
+}
+
 #profPic-select {
   position: absolute;
   width: 0;
@@ -601,6 +628,7 @@ nav {
   width: 300px;
   background-color: black;
   outline: none;
+  color: #9999FF;
 }
 
 .ship-intro #ship-explain {
@@ -691,7 +719,7 @@ nav {
 }
 
 .resources {
-  height: 85px;
+  height: 90px;
   width: 44%;
   display: flex;
   flex-direction: column;
@@ -721,14 +749,14 @@ nav {
   font-size: 12pt;
 }
 
-#ship-name {
+#ship-id {
   color: #9999FF;
 }
 
 .energy-max {
   position: absolute;
   right: 400px;
-  bottom: 111px;
+  bottom: 106px;
   height: 180px;
   border-right: 2px solid #FF9900;
 }
