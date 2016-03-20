@@ -81,7 +81,7 @@
             $('#ship-explain').fadeIn('slow');
           }, 1500);
 
-          return {command: chatID, model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources};
+          return {name: shipName, command: chatID, model: 'Constitution-Class Heavy Cruiser', shields: shields, weapons: weapons, warp: warp, resources: resources};
         }
         else {
           $('#ship-name').val('');
@@ -154,38 +154,6 @@
       board[0].scrollTop = board[0].scrollHeight;
     }
 
-    function returnUser(desiredUser) {
-      var foundUser = false;
-
-      userRef.once('value', function(allUsers) {
-        allUsers.forEach(function(specificUser) {
-          if (desiredUser === specificUser.key()) {
-            foundUser = specificUser;
-
-            return true;
-          }
-        });
-      });
-
-      return foundUser;
-    }
-
-    function returnShip(desiredShip) {
-      var foundShip = false;
-
-      shipRef.once('value', function(allShips) {
-        allShips.forEach(function(specificShip) {
-          if (desiredShip === specificShip.key()) {
-            foundShip = specificShip;
-
-            return true;
-          }
-        });
-      });
-
-      return foundShip;
-    }
-
     userRef.on('child_added', function(userJoining) {
       var listUser = $('<li class="profile-link">');
       var newUser = userJoining.val();
@@ -232,8 +200,9 @@
 
     $('body').on('click', '.profile-link', function() {
       if ($('.profile').css('display') != 'flex') {
+        var userData;
+        var shipData;
         var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
-        var userData = returnUser(clickedUser).val();
         var rank = $('#profile-top-name p').text();
 
         if (clickedUser === chatID) {
@@ -255,10 +224,40 @@
           $('#profile-bottom').css('height', '140px');
         }
 
-        $('#bio-pic').attr('src', userData.profile);
-        $('#profile-top-name h1').text(userData.name);
-        $('#profile-top-name p').text(rank + userData.rank);
-        $('#bio').text(userData.bio);
+          userRef.once('value').then(function(snapshot) {
+            snapshot.forEach(function(specificUser) {
+              if(clickedUser === specificUser.key()) {
+                userData = specificUser.val();
+              }
+            });
+          }).then(function() {
+            $('#bio-pic').attr('src', userData.profile);
+            $('#profile-top-name h1').text(userData.name);
+            $('#profile-top-name p').text(rank + userData.rank);
+            $('#bio').text(userData.bio);
+          }, function(error) {
+            console.error(error);
+          });
+
+          shipRef.once('value').then(function(allShips) {
+            allShips.forEach(function(specificShip) {
+              if(userData.ship === specificShip.key()) {
+                shipData = specificShip.val();
+              }
+            });
+          }).then(function() {
+            var span = $('<span>');
+
+            span.text(shipData.name);
+
+            $('#profile-ship').css('display', 'block');
+
+            $('#profile-ship').text(shipData.model + ':')
+            .append('<br>')
+            .append(span);
+          }, function(error) {
+            console.error(error);
+          });
 
         $('.profile').css('display', 'flex');
       }
@@ -271,6 +270,7 @@
       $('#profile-top-name h1').text('');
       $('#profile-top-name p').text('Rank: ');
       $('#bio').text('');
+      $('#profile-ship').css('display', 'none');
     });
 
     $('#edit-bio').on('click', function() {
