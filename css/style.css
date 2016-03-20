@@ -427,16 +427,61 @@ nav {
   align-items: center;
 }
 
-#profile-top #bio-pic {
-  margin: 10px 25px;
+#pic-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+#pic-container #bio-pic {
   border-radius: 10px;
 }
+
+#profPic-select {
+  margin-top: 10px;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #FF9900;
+  cursor: pointer;
+  cursor: hand;
+}
+
+#profPic-select:hover {
+  border-top: 10px solid red;
+}
+
+#profile-menu {
+  position: absolute;
+  z-index: 1;
+  height: 0;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#profile-menu img {
+  border-radius: 10px;
+  border: 3px solid black;
+}
+
+#profile-menu img:hover {
+  border: 3px solid #FF9900;
+}
+
 
 #profile-top #exit-profile {
   color: #FF9900;
   position: absolute;
   right: 10px;
   top: 10px;
+  cursor: pointer;
+  cursor: hand;
 }
 
 #profile-top #exit-profile:hover {
@@ -461,8 +506,6 @@ nav {
 #profile-ship {
   color: white;
   font-size: 10pt;
-  width: 55%;
-  margin-left: 135px;
 }
 
 #profile-ship span {
@@ -525,6 +568,7 @@ nav {
 }
 
 #trade {
+  display: none;
   position: absolute;
   bottom: 15px;
   left: 40px;
@@ -541,6 +585,7 @@ nav {
 }
 
 #battle {
+  display: none;
   position: absolute;
   bottom: 15px;
   left: 220px;
@@ -554,44 +599,6 @@ nav {
 
 #battle:hover {
   background-color: #530101;
-}
-
-#profPic-select {
-  position: absolute;
-  width: 0;
-	height: 0;
-  left: 90px;
-  top: 127px;
-	border-left: 10px solid transparent;
-	border-right: 10px solid transparent;
-	border-top: 10px solid #FF9900;
-  cursor: pointer;
-  cursor: hand;
-}
-
-#profPic-select:hover {
-  border-top: 10px solid red;
-}
-
-#profile-menu {
-  position: absolute;
-  left: 62px;
-  z-index: 1;
-  height: 0;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-#profile-menu img {
-  border-radius: 10px;
-  border: 3px solid black;
-}
-
-#profile-menu img:hover {
-  border: 3px solid #FF9900;
 }
 
 /*    ----- PLAY OPTIONS -----    */

@@ -205,59 +205,60 @@
         var clickedUser = $(this).text().replace(/[^a-zA-Z\s]+/g, '');
         var rank = $('#profile-top-name p').text();
 
-        if (clickedUser === chatID) {
-          $('#edit-bio').css('display', 'block');
-          $('#profPic-select').css('display', 'block');
-
-          $('#trade').css('display', 'none');
-          $('#battle').css('display', 'none');
-
-          $('#profile-bottom').css('height', 'auto');
-        }
-        else {
-          $('#edit-bio').css('display', 'none');
-          $('#profPic-select').css('display', 'none');
-
-          $('#trade').css('display', 'block');
-          $('#battle').css('display', 'block');
-
-          $('#profile-bottom').css('height', '140px');
-        }
-
-          userRef.once('value').then(function(snapshot) {
-            snapshot.forEach(function(specificUser) {
-              if(clickedUser === specificUser.key()) {
-                userData = specificUser.val();
-              }
-            });
-          }).then(function() {
-            $('#bio-pic').attr('src', userData.profile);
-            $('#profile-top-name h1').text(userData.name);
-            $('#profile-top-name p').text(rank + userData.rank);
-            $('#bio').text(userData.bio);
-          }, function(error) {
-            console.error(error);
+        userRef.once('value').then(function(snapshot) {
+          snapshot.forEach(function(specificUser) {
+            if(clickedUser === specificUser.key()) {
+              userData = specificUser.val();
+            }
           });
+        }).then(function() {
+          if (clickedUser === chatID) {
+            $('#edit-bio').css('display', 'block');
+            $('#profPic-select').css('display', 'block');
 
-          shipRef.once('value').then(function(allShips) {
-            allShips.forEach(function(specificShip) {
-              if(userData.ship === specificShip.key()) {
-                shipData = specificShip.val();
-              }
-            });
-          }).then(function() {
-            var span = $('<span>');
+            $('#profile-bottom').css('height', 'auto');
+          }
+          else {
+            if (userData.status === 'explore' && status === 'explore') {
 
-            span.text(shipData.name);
+              console.log('in conditional');
+              $('#trade').css('display', 'block');
+              $('#battle').css('display', 'block');
 
-            $('#profile-ship').css('display', 'block');
+              $('#profile-bottom').css('height', '140px');
+            }
 
-            $('#profile-ship').text(shipData.model + ':')
-            .append('<br>')
-            .append(span);
-          }, function(error) {
-            console.error(error);
+            $('#edit-bio').css('display', 'none');
+            $('#profPic-select').css('display', 'none');
+          }
+
+          $('#bio-pic').attr('src', userData.profile);
+          $('#profile-top-name h1').text(userData.name);
+          $('#profile-top-name p').text(rank + userData.rank);
+          $('#bio').text(userData.bio);
+        }, function(error) {
+          console.error(error);
+        });
+
+        shipRef.once('value').then(function(allShips) {
+          allShips.forEach(function(specificShip) {
+            if(userData.ship === specificShip.key()) {
+              shipData = specificShip.val();
+            }
           });
+        }).then(function() {
+          var span = $('<span>');
+
+          span.text(shipData.name);
+
+          $('#profile-ship').css('display', 'block');
+
+          $('#profile-ship').text(shipData.model + ':')
+          .append('<br>')
+          .append(span);
+        }, function(error) {
+          return;
+        });
 
         $('.profile').css('display', 'flex');
       }
@@ -271,6 +272,9 @@
       $('#profile-top-name p').text('Rank: ');
       $('#bio').text('');
       $('#profile-ship').css('display', 'none');
+
+      $('#trade').css('display', 'none');
+      $('#battle').css('display', 'none');
     });
 
     $('#edit-bio').on('click', function() {
@@ -324,7 +328,7 @@
       status = 'explore';
       user.update({status: status});
 
-      $('#' + chatID).append('<i class="fa-li fa fa-crosshairs">');
+      $('<i class="fa-li fa fa-crosshairs">').appendTo('#' + chatID);
     });
 
     $('#shield-up').on('click', function() {
