@@ -22,9 +22,9 @@ The Future
 
 Of course, due to the inspiring nature of the Star Trek series, Star Chat is in the works of implementing even more features such as:
 
-+ Customizable profile pages
++ Customizable profile pages (RESOLVED! 3/14)
 + User accounts
 + Private whispers
-+ ...and PvP GAMING!
++ ...and PvP GAMING! (in beta)
 
 Please, stay tuned!
